@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class WheelActivity extends AppCompatActivity {
-    private int from = 0;
+    private int fromDegree = 0;
    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,14 +21,15 @@ public class WheelActivity extends AppCompatActivity {
         spinner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int to = 1800 + ThreadLocalRandom.current().nextInt(0,361); // I wanted to have 5 tours (1800 degrees) and a random stop point.
-                Log.d("to", ""+(to-1800));
-                RotateAnimation r = new RotateAnimation(from, to, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-                r.setFillAfter(true); // makes it continue from its last position.
+                // nextInt memthod does not include '361'
+                int toDegree = 1800 + ThreadLocalRandom.current().nextInt(0,361); // I wanted to have 5 tours (1800 degrees) and a random stop point.
+                Log.d("to", ""+(toDegree-1800));
+                RotateAnimation r = new RotateAnimation(fromDegree, toDegree, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                r.setFillAfter(true); // makes it continue fromDegree its last position.
                 r.setDuration((long) 2*1500);
                 r.setRepeatCount(0);
                 wheel.startAnimation(r);
-                from = to % 360;
+                fromDegree = toDegree % 360;
             }
         });
     }
